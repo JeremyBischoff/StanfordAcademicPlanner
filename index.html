@@ -25,7 +25,7 @@
         document.getElementById(plan[i][2]).appendChild(makecourse(plan[i][1]));
       };
       var remaining = compfinds('C', read('josen(S,C) & countofall(Q,plan(C,Q),0)'), lambda, library);
-      for (var i = 0; i < leftovers.length; i++) {
+      for (var i = 0; i < remaining.length; i++) {
         document.getElementById('directory').appendChild(makecourse(remaining[i]));
       };
       return true;
