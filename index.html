@@ -10,8 +10,121 @@
   </style>
   
 </head>
+<script defer src="epilog.js"></script>
+<script defer src="worksheet.js"></script>
+<script>
+      console.log("initialize");
+      initialize();
+      var dashboard = document.getElementById('bulletin');
+      var courses = compfinds('C', read('course(C,D,N,T,U)'), datasets['catalog'], library);
+      for (var i = 0; i < courses.length; i++) {
+        var option = document.createElement('option');
+        option.innerHTML = courses[i];
+        bulletin.add(option)
+      };
+      var plan = compfinds(read('plan(C,Q)'), read('plan(C,Q)'), lambda, library);
+      for (var i = 0; i < plan.length; i++) {
+        document.getElementById(plan[i][2]).appendChild(makecourse(plan[i][1]));
+      };
+      var remaining = compfinds('C', read('josen(S,C) & countofall(Q,plan(C,Q),0)'), lambda, library);
+      for (var i = 0; i < remaining.length; i++) {
+        document.getElementById('directory').appendChild(makecourse(remaining[i]));
+      };
+      return true;
+    function initializeplan() {
+      console.log("initialize");
+      initialize();
+      var dashboard = document.getElementById('bulletin');
+      var courses = compfinds('C', read('course(C,D,N,T,U)'), datasets['catalog'], library);
+      for (var i = 0; i < courses.length; i++) {
+        var option = document.createElement('option');
+        option.innerHTML = courses[i];
+        bulletin.add(option)
+      };
+      var plan = compfinds(read('plan(C,Q)'), read('plan(C,Q)'), lambda, library);
+      for (var i = 0; i < plan.length; i++) {
+        document.getElementById(plan[i][2]).appendChild(makecourse(plan[i][1]));
+      };
+      var remaining = compfinds('C', read('josen(S,C) & countofall(Q,plan(C,Q),0)'), lambda, library);
+      for (var i = 0; i < remaining.length; i++) {
+        document.getElementById('directory').appendChild(makecourse(remaining[i]));
+      };
+      return true;
+    }
 
-<body bgcolor='#5febf5'>
+    var quarters =
+      ['202301', '202302', '202303', '202304',
+        '202401', '202402', '202403', '202404',
+        '202501', '202502', '202503', '202504',
+        '202601', '202602', '202603', '202604'];
+
+    function selectcourse(widget) {
+      console.log("select");
+      var course = widget.value;
+      if (!compfindp(seq('plan', course, 'QTR'), lambda, library)) {
+        document.getElementById('directory').appendChild(makecourse(course));
+        savefact(seq('plan', course, 'directory'), lambda)
+      };
+      widget.value = 'blank';
+      return true
+    }
+
+    function deselect(ev) {
+      ev.preventDefault();
+      var course = ev.dataTransfer.getData("text");
+      for (var i = 0; i < quarters.length; i++) { document.getElementById(quarters[i]).style.backgroundColor = '#ffffff' };
+      var widget = document.getElementById(course);
+      var oldqtr = widget.parentNode.id;
+      dropfact(seq('plan', course, oldqtr), lambda);
+      widget.parentNode.removeChild(widget);
+      document.getElementById('lambda').value = grindem(lambda);
+      populatesheet()
+    }
+
+    function makecourse(course) {
+      var widget = document.createElement('div');
+      widget.id = course;
+      widget.setAttribute('style', 'width:106;border-radius:5px;border-width:2px; border-style: solid; border-color: gray;background-color:#eeeeee;text-align:center;padding-top:4px; padding-bottom:4px;cursor:pointer');
+      widget.setAttribute('draggable', 'true');
+      widget.setAttribute('ondragstart', 'drag(event)');
+      widget.innerHTML = course;
+      return widget
+    }
+
+    function drag(ev) {
+      console.log("drag");
+      ev.dataTransfer.setData("text", ev.target.id);
+      var course = ev.target.id;
+      for (var i = 0; i < quarters.length; i++) {
+        if (!compfindp(seq('offered', course, quarters[i]), lambda, library)) { document.getElementById(quarters[i]).style.backgroundColor = '#fca9a9' }
+      }
+    }
+
+    function allowDrop(event) { event.preventDefault() }
+
+    function drop(ev) {
+      console.log("dude");
+      ev.preventDefault();
+      var course = ev.dataTransfer.getData("text");
+      for (var i = 0; i < quarters.length; i++) {
+        document.getElementById(quarters[i]).style.backgroundColor = '#ffffff'
+      };
+      var widget = document.getElementById(course);
+      var oldqtr = widget.parentNode.id;
+      var newqtr = ev.target.id;
+      dropfact(seq('plan', course, oldqtr), lambda);
+      savefact(seq('plan', course, newqtr), lambda)
+      if (find(newqtr, quarters)) {
+        ev.target.appendChild(widget)
+      }
+      else {
+        document.getElementById('directory').appendChild(widget)
+      };
+      document.getElementById('lambda').value = grindem(lambda);
+      populatesheet()
+    }
+</script>
+<body bgcolor='#5febf5' onload="initializeplan()">
   <center>
     <table width='700' cellspacing='0' cellpadding='0' bgcolor='#ffffff'>
       <tr>
@@ -135,106 +248,10 @@
       </tr>
     </table>
   </center>
-  <script src="epilog.js"></script>
-<script src="worksheet.js"></script>
-<script>
-    function initializeplan() {
-      console.log("initialize");
-      initialize();
-      var dashboard = document.getElementById('bulletin');
-      var courses = compfinds('C', read('course(C,D,N,T,U)'), datasets['catalog'], library);
-      for (var i = 0; i < courses.length; i++) {
-        var option = document.createElement('option');
-        option.innerHTML = courses[i];
-        bulletin.add(option)
-      };
-      var plan = compfinds(read('plan(C,Q)'), read('plan(C,Q)'), lambda, library);
-      for (var i = 0; i < plan.length; i++) {
-        document.getElementById(plan[i][2]).appendChild(makecourse(plan[i][1]));
-      };
-      var remaining = compfinds('C', read('josen(S,C) & countofall(Q,plan(C,Q),0)'), lambda, library);
-      for (var i = 0; i < remaining.length; i++) {
-        document.getElementById('directory').appendChild(makecourse(remaining[i]));
-      };
-      return true;
-    }
-
-    var quarters =
-      ['202301', '202302', '202303', '202304',
-        '202401', '202402', '202403', '202404',
-        '202501', '202502', '202503', '202504',
-        '202601', '202602', '202603', '202604'];
-
-    function selectcourse(widget) {
-      console.log("select");
-      var course = widget.value;
-      if (!compfindp(seq('plan', course, 'QTR'), lambda, library)) {
-        document.getElementById('directory').appendChild(makecourse(course));
-        savefact(seq('plan', course, 'directory'), lambda)
-      };
-      widget.value = 'blank';
-      return true
-    }
-
-    function deselect(ev) {
-      ev.preventDefault();
-      var course = ev.dataTransfer.getData("text");
-      for (var i = 0; i < quarters.length; i++) { document.getElementById(quarters[i]).style.backgroundColor = '#ffffff' };
-      var widget = document.getElementById(course);
-      var oldqtr = widget.parentNode.id;
-      dropfact(seq('plan', course, oldqtr), lambda);
-      widget.parentNode.removeChild(widget);
-      document.getElementById('lambda').value = grindem(lambda);
-      populatesheet()
-    }
-
-    function makecourse(course) {
-      var widget = document.createElement('div');
-      widget.id = course;
-      widget.setAttribute('style', 'width:106;border-radius:5px;border-width:2px; border-style: solid; border-color: gray;background-color:#eeeeee;text-align:center;padding-top:4px; padding-bottom:4px;cursor:pointer');
-      widget.setAttribute('draggable', 'true');
-      widget.setAttribute('ondragstart', 'drag(event)');
-      widget.innerHTML = course;
-      return widget
-    }
-
-    function drag(ev) {
-      console.log("drag");
-      ev.dataTransfer.setData("text", ev.target.id);
-      var course = ev.target.id;
-      for (var i = 0; i < quarters.length; i++) {
-        if (!compfindp(seq('offered', course, quarters[i]), lambda, library)) { document.getElementById(quarters[i]).style.backgroundColor = '#fca9a9' }
-      }
-    }
-
-    function allowDrop(event) { event.preventDefault() }
-
-    function drop(ev) {
-      console.log("dude");
-      ev.preventDefault();
-      var course = ev.dataTransfer.getData("text");
-      for (var i = 0; i < quarters.length; i++) {
-        document.getElementById(quarters[i]).style.backgroundColor = '#ffffff'
-      };
-      var widget = document.getElementById(course);
-      var oldqtr = widget.parentNode.id;
-      var newqtr = ev.target.id;
-      dropfact(seq('plan', course, oldqtr), lambda);
-      savefact(seq('plan', course, newqtr), lambda)
-      if (find(newqtr, quarters)) {
-        ev.target.appendChild(widget)
-      }
-      else {
-        document.getElementById('directory').appendChild(widget)
-      };
-      document.getElementById('lambda').value = grindem(lambda);
-      populatesheet()
-    }
-</script>
 </body>
 
   
-<center onload="initializeplan()">
+<center>
   <textarea id='lambda' style='font-face:courier' rows='10' cols='80'>
 plan(math19,directory)
 plan(math20,directory)
