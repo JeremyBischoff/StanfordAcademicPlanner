@@ -13,8 +13,12 @@
 <script defer src="epilog.js"></script>
 <script defer src="worksheet.js"></script>
 <script>
+    function testLoad() {
+      console.log("Test function loaded.");
+      initializeplan(); // Call the original function
+    }
+  
     function initializeplan() {
-      console.log("initialize");
       initialize();
       var dashboard = document.getElementById('bulletin');
       var courses = compfinds('C', read('course(C,D,N,T,U)'), datasets['catalog'], library);
@@ -106,7 +110,7 @@
       populatesheet()
     }
 </script>
-<body bgcolor='#5febf5' onload="initializeplan()">
+<body bgcolor='#5febf5' onload="testLoad()">
   <center>
     <table width='700' cellspacing='0' cellpadding='0' bgcolor='#ffffff'>
       <tr>
