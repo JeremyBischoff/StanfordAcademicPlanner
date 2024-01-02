@@ -10,8 +10,9 @@
   </style>
   <script defer src="epilog.js"></script>
   <script defer src="worksheet.js"></script>
-  <script defer>
+  <script>
     function initializeplan() {
+      console.log("initialize");
       initialize();
       var dashboard = document.getElementById('bulletin');
       var courses = compfinds('C', read('course(C,D,N,T,U)'), datasets['catalog'], library);
