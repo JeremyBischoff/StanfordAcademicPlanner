@@ -12,6 +12,7 @@
   <script src="worksheet.js"></script>
   <script>
     function initializeplan() {
+      console.log("initialized");
       initialize();
       var dashboard = document.getElementById('bulletin');
       var courses = compfinds('C', read('course(C,D,N,T,U)'), datasets['catalog'], library);
