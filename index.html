@@ -38,6 +38,7 @@
         '202601', '202602', '202603', '202604'];
 
     function selectcourse(widget) {
+      console.log("select");
       var course = widget.value;
       if (!compfindp(seq('plan', course, 'QTR'), lambda, library)) {
         document.getElementById('directory').appendChild(makecourse(course));
@@ -70,6 +71,7 @@
     }
 
     function drag(ev) {
+      console.log("drag");
       ev.dataTransfer.setData("text", ev.target.id);
       var course = ev.target.id;
       for (var i = 0; i < quarters.length; i++) {
@@ -80,6 +82,7 @@
     function allowDrop(event) { event.preventDefault() }
 
     function drop(ev) {
+      console.log("dude");
       ev.preventDefault();
       var course = ev.dataTransfer.getData("text");
       for (var i = 0; i < quarters.length; i++) {
