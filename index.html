@@ -13,24 +13,6 @@
 <script defer src="epilog.js"></script>
 <script defer src="worksheet.js"></script>
 <script>
-      console.log("initialize");
-      initialize();
-      var dashboard = document.getElementById('bulletin');
-      var courses = compfinds('C', read('course(C,D,N,T,U)'), datasets['catalog'], library);
-      for (var i = 0; i < courses.length; i++) {
-        var option = document.createElement('option');
-        option.innerHTML = courses[i];
-        bulletin.add(option)
-      };
-      var plan = compfinds(read('plan(C,Q)'), read('plan(C,Q)'), lambda, library);
-      for (var i = 0; i < plan.length; i++) {
-        document.getElementById(plan[i][2]).appendChild(makecourse(plan[i][1]));
-      };
-      var remaining = compfinds('C', read('josen(S,C) & countofall(Q,plan(C,Q),0)'), lambda, library);
-      for (var i = 0; i < remaining.length; i++) {
-        document.getElementById('directory').appendChild(makecourse(remaining[i]));
-      };
-      return true;
     function initializeplan() {
       console.log("initialize");
       initialize();
