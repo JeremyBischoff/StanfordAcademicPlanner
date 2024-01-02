@@ -8,16 +8,9 @@
       padding: 0px;
     }
   </style>
-  
-</head>
-<script defer src="epilog.js"></script>
-<script defer src="worksheet.js"></script>
-<script>
-    function testLoad() {
-      console.log("Test function loaded.");
-      initializeplan(); // Call the original function
-    }
-  
+  <script defer src="epilog.js"></script>
+  <script defer src="worksheet.js"></script>
+  <script>
     function initializeplan() {
       initialize();
       var dashboard = document.getElementById('bulletin');
@@ -45,7 +38,6 @@
         '202601', '202602', '202603', '202604'];
 
     function selectcourse(widget) {
-      console.log("select");
       var course = widget.value;
       if (!compfindp(seq('plan', course, 'QTR'), lambda, library)) {
         document.getElementById('directory').appendChild(makecourse(course));
@@ -78,7 +70,6 @@
     }
 
     function drag(ev) {
-      console.log("drag");
       ev.dataTransfer.setData("text", ev.target.id);
       var course = ev.target.id;
       for (var i = 0; i < quarters.length; i++) {
@@ -89,7 +80,6 @@
     function allowDrop(event) { event.preventDefault() }
 
     function drop(ev) {
-      console.log("dude");
       ev.preventDefault();
       var course = ev.dataTransfer.getData("text");
       for (var i = 0; i < quarters.length; i++) {
@@ -109,8 +99,11 @@
       document.getElementById('lambda').value = grindem(lambda);
       populatesheet()
     }
-</script>
-<body bgcolor='#5febf5' onload="testLoad()">
+
+  </script>
+</head>
+
+<body bgcolor='#5febf5' onload="initializeplan()">
   <center>
     <table width='700' cellspacing='0' cellpadding='0' bgcolor='#ffffff'>
       <tr>
@@ -163,46 +156,62 @@
                             </tr>
                             <tr height='120'>
                               <th width='60' bgcolor='#fac85c' valign='center'>2023</th>
-                              <td id='202301' width='120' align='center' valign='top' ondragover='allowDrop(event)' ondrop='drop(event)'>
+                              <td id='202301' width='120' align='center' valign='top' ondragover='allowDrop(event)'
+                                ondrop='drop(event)'>
                               </td>
-                              <td id='202302' width='120' align='center' valign='top' ondragover='allowDrop(event)' ondrop='drop(event)'>
+                              <td id='202302' width='120' align='center' valign='top' ondragover='allowDrop(event)'
+                                ondrop='drop(event)'>
                               </td>
-                              <td id='202303' width='120' align='center' valign='top' ondragover='allowDrop(event)' ondrop='drop(event)'>
+                              <td id='202303' width='120' align='center' valign='top' ondragover='allowDrop(event)'
+                                ondrop='drop(event)'>
                               </td>
-                              <td id='202304' width='120' align='center' valign='top' ondragover='allowDrop(event)' ondrop='drop(event)'>
+                              <td id='202304' width='120' align='center' valign='top' ondragover='allowDrop(event)'
+                                ondrop='drop(event)'>
                               </td>
                             </tr>
                             <tr height='120'>
                               <th width='60' bgcolor='#fac85c' valign='center'>2024</th>
-                              <td id='202401' width='120' align='center' valign='top' ondragover='allowDrop(event)' ondrop='drop(event)'>
+                              <td id='202401' width='120' align='center' valign='top' ondragover='allowDrop(event)'
+                                ondrop='drop(event)'>
                               </td>
-                              <td id='202402' width='120' align='center' valign='top' ondragover='allowDrop(event)' ondrop='drop(event)'>
+                              <td id='202402' width='120' align='center' valign='top' ondragover='allowDrop(event)'
+                                ondrop='drop(event)'>
                               </td>
-                              <td id='202403' width='120' align='center' valign='top' ondragover='allowDrop(event)' ondrop='drop(event)'>
+                              <td id='202403' width='120' align='center' valign='top' ondragover='allowDrop(event)'
+                                ondrop='drop(event)'>
                               </td>
-                              <td id='202404' width='120' align='center' valign='top' ondragover='allowDrop(event)' ondrop='drop(event)'>
+                              <td id='202404' width='120' align='center' valign='top' ondragover='allowDrop(event)'
+                                ondrop='drop(event)'>
                               </td>
                             </tr>
                             <tr height='120'>
                               <th width='60' bgcolor='#fac85c' valign='center'>2025</th>
-                              <td id='202501' width='120' align='center' valign='top' ondragover='allowDrop(event)' ondrop='drop(event)'>
+                              <td id='202501' width='120' align='center' valign='top' ondragover='allowDrop(event)'
+                                ondrop='drop(event)'>
                               </td>
-                              <td id='202502' width='120' align='center' valign='top' ondragover='allowDrop(event)' ondrop='drop(event)'>
+                              <td id='202502' width='120' align='center' valign='top' ondragover='allowDrop(event)'
+                                ondrop='drop(event)'>
                               </td>
-                              <td id='202503' width='120' align='center' valign='top' ondragover='allowDrop(event)' ondrop='drop(event)'>
+                              <td id='202503' width='120' align='center' valign='top' ondragover='allowDrop(event)'
+                                ondrop='drop(event)'>
                               </td>
-                              <td id='202504' width='120' align='center' valign='top' ondragover='allowDrop(event)' ondrop='drop(event)'>
+                              <td id='202504' width='120' align='center' valign='top' ondragover='allowDrop(event)'
+                                ondrop='drop(event)'>
                               </td>
                             </tr>
                             <tr height='120'>
                               <th width='60' bgcolor='#fac85c' valign='center'>2026</th>
-                              <td id='202601' width='120' align='center' valign='top' ondragover='allowDrop(event)' ondrop='drop(event)'>
+                              <td id='202601' width='120' align='center' valign='top' ondragover='allowDrop(event)'
+                                ondrop='drop(event)'>
                               </td>
-                              <td id='202602' width='120' align='center' valign='top' ondragover='allowDrop(event)' ondrop='drop(event)'>
+                              <td id='202602' width='120' align='center' valign='top' ondragover='allowDrop(event)'
+                                ondrop='drop(event)'>
                               </td>
-                              <td id='202603' width='120' align='center' valign='top' ondragover='allowDrop(event)' ondrop='drop(event)'>
+                              <td id='202603' width='120' align='center' valign='top' ondragover='allowDrop(event)'
+                                ondrop='drop(event)'>
                               </td>
-                              <td id='202604' width='120' align='center' valign='top' ondragover='allowDrop(event)' ondrop='drop(event)'>
+                              <td id='202604' width='120' align='center' valign='top' ondragover='allowDrop(event)'
+                                ondrop='drop(event)'>
                               </td>
                             </tr>
                           </table>
@@ -222,7 +231,8 @@
                       <input type='hidden' id='submitstructure' name='data' value='' />
                       <input type='hidden' id='submitbutton' name='command' value='record' />
                       <input id='save' type='button' value='Save'
-                        style='font-family:times;font-size:18px;background-color:#eeeeee;width:100' onclick='doSubmit("save")' />
+                        style='font-family:times;font-size:18px;background-color:#eeeeee;width:100'
+                        onclick='doSubmit("save")' />
                     </form>
                     <br />
                   </center>
@@ -236,7 +246,6 @@
   </center>
 </body>
 
-  
 <center>
   <textarea id='lambda' style='font-face:courier' rows='10' cols='80'>
 plan(math19,directory)
